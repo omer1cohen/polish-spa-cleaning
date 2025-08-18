@@ -1,0 +1,16 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(npm run dev:*)",
+      "Bash(npm install)",
+      "WebFetch(domain:3m.com)",
+      "Bash(git add:*)",
+      "Bash(git push:*)",
+      "WebFetch(domain:plasto-polish.co.il)",
+      "Bash(rm:*)",
+      "Bash(git checkout:*)"
+    ],
+    "deny": [],
+    "ask": []
+  }
+}
