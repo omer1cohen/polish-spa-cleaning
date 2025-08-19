@@ -9,10 +9,13 @@
       "WebFetch(domain:plasto-polish.co.il)",
       "Bash(rm:*)",
       "Bash(git checkout:*)",
-      "Bash(npm run build:*)"
+      "Bash(npm run build:*)",
+      "WebFetch(domain:www.youtube.com)",
+      "Bash(mkdir:*)",
+      "Bash(git restore:*)"
     ],
     "deny": [],
     "ask": []
   },
-  "outputStyle": "Explanatory"
+  "outputStyle": "default"
 }
