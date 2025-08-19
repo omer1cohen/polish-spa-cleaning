@@ -141,6 +141,7 @@ const HeroSection = () => {
   const { scrollY } = useScroll()
   const y = useTransform(scrollY, [0, 1000], [0, -300])
   const opacity = useTransform(scrollY, [0, 500], [1, 0])
+  const [isVideoPlaying, setIsVideoPlaying] = useState(false)
 
   return (
     <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
@@ -208,6 +209,7 @@ const HeroSection = () => {
           </motion.button>
           
           <motion.button
+            onClick={() => setIsVideoPlaying(true)}
             className="glass group px-8 py-4 text-white rounded-full font-semibold text-lg 
                        hover:bg-white/20 transition-all duration-300 flex items-center gap-2"
             whileHover={{ scale: 1.05, y: -2 }}
@@ -216,6 +218,75 @@ const HeroSection = () => {
             <Play className="w-5 h-5" />
             Watch Demo
           </motion.button>
+        </motion.div>
+        
+        {/* YouTube Video Demo - Enhanced with Custom Controls */}
+        <motion.div
+          className="mt-8 mb-16 flex justify-center px-6"
+          initial={{ opacity: 0, y: 50 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8, delay: 1 }}
+        >
+          <div className="relative w-full max-w-5xl group">
+            <div className="glass rounded-3xl p-6 backdrop-blur-xl">
+              <div className="relative w-full" style={{ paddingBottom: '45%' }}>
+                {!isVideoPlaying ? (
+                  // Video Thumbnail with Play Button
+                  <div className="absolute inset-0 rounded-2xl overflow-hidden bg-gradient-to-br from-primary-800 to-primary-900">
+                    <img
+                      src={`https://img.youtube.com/vi/WiBF2-xToIE/maxresdefault.jpg`}
+                      alt="Cleaning Product Demo"
+                      className="w-full h-full object-cover"
+                    />
+                    <div className="absolute inset-0 bg-black/30 flex items-center justify-center">
+                      <motion.button
+                        onClick={() => setIsVideoPlaying(true)}
+                        className="w-20 h-20 bg-white/90 rounded-full flex items-center justify-center
+                                   hover:bg-white hover:scale-110 transition-all duration-300 group"
+                        whileHover={{ scale: 1.1 }}
+                        whileTap={{ scale: 0.95 }}
+                      >
+                        <Play className="w-8 h-8 text-primary-900 ml-1 group-hover:text-accent-600 transition-colors" />
+                      </motion.button>
+                    </div>
+                    <div className="absolute bottom-4 left-4 right-4 text-white">
+                      <h3 className="text-xl font-semibold mb-1">Product Demonstration</h3>
+                      <p className="text-white/80 text-sm">See our revolutionary cleaning technology in action</p>
+                    </div>
+                  </div>
+                ) : (
+                  // YouTube iframe with enhanced controls
+                  <>
+                    <iframe
+                      className="absolute inset-0 w-full h-full rounded-2xl"
+                      src="https://www.youtube.com/embed/WiBF2-xToIE?autoplay=1&mute=0&controls=1&modestbranding=1&rel=0&fs=1"
+                      title="Cleaning Product Demo"
+                      frameBorder="0"
+                      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                      allowFullScreen
+                    />
+                    {/* Close button for returning to thumbnail */}
+                    <motion.button
+                      onClick={() => setIsVideoPlaying(false)}
+                      className="absolute top-4 right-4 z-10 w-8 h-8 bg-black/50 hover:bg-black/70 
+                                 rounded-full flex items-center justify-center text-white transition-all duration-300"
+                      whileHover={{ scale: 1.1 }}
+                      whileTap={{ scale: 0.95 }}
+                      initial={{ opacity: 0 }}
+                      animate={{ opacity: 1 }}
+                      transition={{ delay: 0.5 }}
+                    >
+                      ✕
+                    </motion.button>
+                  </>
+                )}
+              </div>
+            </div>
+            
+            {/* Video Enhancement Overlay */}
+            <div className="absolute -inset-2 bg-gradient-to-r from-accent-500/20 to-primary-500/20 rounded-[2rem] blur-xl -z-10 
+                            group-hover:from-accent-500/30 group-hover:to-primary-500/30 transition-all duration-500" />
+          </div>
         </motion.div>
         
         {/* Scroll Indicator */}
@@ -228,24 +299,6 @@ const HeroSection = () => {
         </motion.div>
       </motion.div>
       
-      {/* Floating Product Preview */}
-      <motion.div
-        className="absolute right-10 top-1/2 transform -translate-y-1/2 hidden lg:block"
-        initial={{ opacity: 0, x: 100, rotate: -10 }}
-        animate={{ opacity: 1, x: 0, rotate: 0 }}
-        transition={{ duration: 1, delay: 1 }}
-        whileHover={{ scale: 1.1, rotate: 5 }}
-      >
-        <div className="relative">
-          <div className="w-64 h-64 glass rounded-3xl p-8 backdrop-blur-xl">
-            <div className="w-full h-full bg-gradient-to-br from-accent-400/20 to-primary-400/20 rounded-2xl 
-                            flex items-center justify-center border border-white/20">
-              <Sparkles className="w-24 h-24 text-accent-400" />
-            </div>
-          </div>
-          <div className="ripple-effect" />
-        </div>
-      </motion.div>
     </section>
   )
 }
