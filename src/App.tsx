@@ -141,14 +141,119 @@ const HeroSection = () => {
   const { scrollY } = useScroll()
   const y = useTransform(scrollY, [0, 1000], [0, -300])
   const opacity = useTransform(scrollY, [0, 500], [1, 0])
-  const [isVideoPlaying, setIsVideoPlaying] = useState(false)
+  const [isVideoLoaded, setIsVideoLoaded] = useState(false)
+  const [videoKey, setVideoKey] = useState(0)
+
+  // Auto-refresh Plasto Polish video every 4 minutes to ensure continuous playback
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setVideoKey(prev => prev + 1)
+      setIsVideoLoaded(false)
+      console.log('Auto-refreshing Plasto Polish video for continuous playback')
+    }, 240000) // 4 minutes - slightly longer for better user experience
+
+    return () => clearInterval(interval)
+  }, [])
+
+  // Log when video loads successfully
+  useEffect(() => {
+    if (isVideoLoaded) {
+      console.log('✅ Plasto Polish video loaded and playing in background!')
+    }
+  }, [isVideoLoaded])
 
   return (
     <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
-      <AnimatedBackground />
+      {/* Background Video */}
+      <div className="absolute inset-0 w-full h-full overflow-hidden">
+        {/* YouTube Video Background - Simple and Direct */}
+        <div 
+          className="absolute inset-0 w-full h-full"
+          style={{
+            transform: 'scale(1.1)', 
+            filter: 'brightness(0.4) contrast(1.2)',
+          }}
+        >
+          <iframe
+            key={`youtube-bg-${videoKey}`}
+            width="100%"
+            height="100%"
+            src="https://www.youtube.com/embed/WiBF2-xToIE?autoplay=1&mute=1&loop=1&playlist=WiBF2-xToIE&controls=0&showinfo=0&rel=0&fs=0&iv_load_policy=3&modestbranding=1&playsinline=1&disablekb=1&start=0&quality=hd1080&vq=hd1080&hd=1"
+            title="פלסטו פוליש - מוצרי ניקיון איכותיים | Plasto Polish Quality Cleaning Products"
+            frameBorder="0"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+            referrerPolicy="strict-origin-when-cross-origin"
+            allowFullScreen
+            style={{
+              pointerEvents: 'none',
+              position: 'absolute',
+              top: '50%',
+              left: '50%',
+              transform: 'translate(-50%, -50%)',
+              minWidth: '100%',
+              minHeight: '100%',
+              width: '100vw',
+              height: '56.25vw', // 16:9 aspect ratio
+            }}
+            onLoad={() => {
+              setIsVideoLoaded(true)
+              console.log('YouTube video loaded successfully')
+            }}
+          />
+        </div>
+        
+        {/* Fallback gradient background while video loads */}
+        {!isVideoLoaded && (
+          <div className="absolute inset-0 bg-gradient-to-br from-primary-900 via-primary-800 to-primary-900">
+            <div className="absolute inset-0 flex items-center justify-center">
+              <div className="text-white/50 text-center">
+                <div className="animate-spin w-8 h-8 border-2 border-white/30 border-t-white/70 rounded-full mx-auto mb-2"></div>
+                <p className="text-sm">Loading video...</p>
+              </div>
+            </div>
+          </div>
+        )}
+        
+        {/* Overlay for content readability */}
+        <div className="absolute inset-0 bg-gradient-to-b from-black/30 via-black/20 to-black/40" />
+        <div className="absolute inset-0 bg-gradient-to-r from-primary-900/30 via-transparent to-accent-900/20" />
+      </div>
+
+      {/* Subtle animated overlay elements */}
+      <div className="absolute inset-0 overflow-hidden">
+        {/* Floating particles for extra ambiance */}
+        {[...Array(12)].map((_, i) => (
+          <motion.div
+            key={i}
+            className="absolute w-1 h-1 bg-white/20 rounded-full"
+            initial={{ 
+              x: Math.random() * (typeof window !== 'undefined' ? window.innerWidth : 1920),
+              y: (typeof window !== 'undefined' ? window.innerHeight : 1080) + 100,
+              scale: 0 
+            }}
+            animate={{ 
+              y: -100,
+              scale: [0, 1, 0],
+              x: Math.random() * (typeof window !== 'undefined' ? window.innerWidth : 1920)
+            }}
+            transition={{
+              duration: Math.random() * 15 + 10,
+              repeat: Infinity,
+              delay: Math.random() * 5,
+              ease: "linear"
+            }}
+          />
+        ))}
+        
+        {/* Subtle grid pattern overlay */}
+        <div className="absolute inset-0 opacity-20" 
+             style={{
+               backgroundImage: `url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.02'%3E%3Ccircle cx='30' cy='30' r='1'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E")`
+             }} />
+      </div>
       
       <motion.div 
-        className="relative z-10 text-center px-6 max-w-6xl mx-auto"
+        className="relative z-10 text-center px-6 max-w-6xl mx-auto hero-content"
         style={{ y, opacity }}
       >
         <motion.div
@@ -209,86 +314,43 @@ const HeroSection = () => {
           </motion.button>
           
           <motion.button
-            onClick={() => setIsVideoPlaying(true)}
             className="glass group px-8 py-4 text-white rounded-full font-semibold text-lg 
                        hover:bg-white/20 transition-all duration-300 flex items-center gap-2"
             whileHover={{ scale: 1.05, y: -2 }}
             whileTap={{ scale: 0.95 }}
+            onClick={() => document.getElementById('products')?.scrollIntoView({ behavior: 'smooth' })}
           >
-            <Play className="w-5 h-5" />
-            Watch Demo
+            <Sparkles className="w-5 h-5" />
+            Learn More
           </motion.button>
         </motion.div>
         
-        {/* YouTube Video Demo - Enhanced with Custom Controls */}
-        <motion.div
-          className="mt-8 mb-16 flex justify-center px-6"
-          initial={{ opacity: 0, y: 50 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 1 }}
-        >
-          <div className="relative w-full max-w-5xl group">
-            <div className="glass rounded-3xl p-6 backdrop-blur-xl">
-              <div className="relative w-full" style={{ paddingBottom: '45%' }}>
-                {!isVideoPlaying ? (
-                  // Video Thumbnail with Play Button
-                  <div className="absolute inset-0 rounded-2xl overflow-hidden bg-gradient-to-br from-primary-800 to-primary-900">
-                    <img
-                      src={`https://img.youtube.com/vi/WiBF2-xToIE/maxresdefault.jpg`}
-                      alt="Cleaning Product Demo"
-                      className="w-full h-full object-cover"
-                    />
-                    <div className="absolute inset-0 bg-black/30 flex items-center justify-center">
-                      <motion.button
-                        onClick={() => setIsVideoPlaying(true)}
-                        className="w-20 h-20 bg-white/90 rounded-full flex items-center justify-center
-                                   hover:bg-white hover:scale-110 transition-all duration-300 group"
-                        whileHover={{ scale: 1.1 }}
-                        whileTap={{ scale: 0.95 }}
-                      >
-                        <Play className="w-8 h-8 text-primary-900 ml-1 group-hover:text-accent-600 transition-colors" />
-                      </motion.button>
-                    </div>
-                    <div className="absolute bottom-4 left-4 right-4 text-white">
-                      <h3 className="text-xl font-semibold mb-1">Product Demonstration</h3>
-                      <p className="text-white/80 text-sm">See our revolutionary cleaning technology in action</p>
-                    </div>
-                  </div>
-                ) : (
-                  // YouTube iframe with enhanced controls
-                  <>
-                    <iframe
-                      className="absolute inset-0 w-full h-full rounded-2xl"
-                      src="https://www.youtube.com/embed/WiBF2-xToIE?autoplay=1&mute=0&controls=1&modestbranding=1&rel=0&fs=1"
-                      title="Cleaning Product Demo"
-                      frameBorder="0"
-                      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                      allowFullScreen
-                    />
-                    {/* Close button for returning to thumbnail */}
-                    <motion.button
-                      onClick={() => setIsVideoPlaying(false)}
-                      className="absolute top-4 right-4 z-10 w-8 h-8 bg-black/50 hover:bg-black/70 
-                                 rounded-full flex items-center justify-center text-white transition-all duration-300"
-                      whileHover={{ scale: 1.1 }}
-                      whileTap={{ scale: 0.95 }}
-                      initial={{ opacity: 0 }}
-                      animate={{ opacity: 1 }}
-                      transition={{ delay: 0.5 }}
-                    >
-                      ✕
-                    </motion.button>
-                  </>
-                )}
-              </div>
-            </div>
-            
-            {/* Video Enhancement Overlay */}
-            <div className="absolute -inset-2 bg-gradient-to-r from-accent-500/20 to-primary-500/20 rounded-[2rem] blur-xl -z-10 
-                            group-hover:from-accent-500/30 group-hover:to-primary-500/30 transition-all duration-500" />
+        {/* Video Control Buttons */}
+        <div className="absolute top-4 right-4 flex gap-2">
+          <motion.button
+            onClick={() => {
+              setVideoKey(prev => prev + 1)
+              setIsVideoLoaded(false)
+              console.log('🔄 Manual Plasto Polish video refresh initiated')
+            }}
+            className="glass w-10 h-10 rounded-full flex items-center justify-center
+                       text-white/70 hover:text-white hover:bg-white/20 transition-all duration-300"
+            whileHover={{ scale: 1.1 }}
+            whileTap={{ scale: 0.95 }}
+            title="רענון סרטון פלסטו פוליש | Refresh Plasto Polish Video"
+          >
+            <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
+            </svg>
+          </motion.button>
+          
+          {/* Video Status Indicator */}
+          <div className="glass px-3 py-2 rounded-full flex items-center gap-2 text-white/70 text-xs">
+            <div className={`w-2 h-2 rounded-full ${isVideoLoaded ? 'bg-green-400 animate-pulse' : 'bg-yellow-400 animate-spin'}`} />
+            {isVideoLoaded ? 'פעיל | Active' : 'טוען | Loading'}
           </div>
-        </motion.div>
-        
+        </div>
+
         {/* Scroll Indicator */}
         <motion.div
           className="absolute bottom-8 left-1/2 transform -translate-x-1/2"
