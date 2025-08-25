@@ -12,7 +12,8 @@
       "Bash(npm run build:*)",
       "WebFetch(domain:www.youtube.com)",
       "Bash(mkdir:*)",
-      "Bash(git restore:*)"
+      "Bash(git restore:*)",
+      "Bash(npm i:*)"
     ],
     "deny": [],
     "ask": []

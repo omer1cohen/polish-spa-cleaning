@@ -3,53 +3,174 @@
 @tailwind utilities;
 
 @layer base {
+  :root {
+    /* Design Tokens */
+    --pp-bg: 15 46 58;         /* #0F2E3A - deep teal */
+    --pp-fg: 230 241 244;      /* #E6F1F4 - light text */
+    --pp-fg-muted: 26 42 47;   /* #1A2A2F - dark text */
+    --pp-primary: 255 127 39;  /* #FF7F27 - orange */
+    --pp-accent: 66 220 188;   /* #42DCBC - teal accent */
+    --pp-surface: 20 51 65;    /* #143341 - card surface */
+    --pp-border: 255 255 255;  /* #FFFFFF - borders */
+    --pp-radius: 1.25rem;      /* 20px */
+    --pp-shadow: 0 8px 24px rgb(0 0 0 / 0.24);
+    --pp-shadow-sm: 0 2px 8px rgb(0 0 0 / 0.12);
+    --pp-shadow-md: 0 16px 32px rgb(0 0 0 / 0.32);
+    
+    /* Typography Scale (1.25 ratio) */
+    --pp-text-display-1: 4rem;    /* 64px */
+    --pp-text-h1: 3rem;          /* 48px */
+    --pp-text-h2: 2rem;          /* 32px */
+    --pp-text-h3: 1.5rem;        /* 24px */
+    --pp-text-body: 1rem;        /* 16px */
+    --pp-text-caption: 0.75rem;  /* 12px */
+    
+    /* Line Heights */
+    --pp-leading-display: 1.1;
+    --pp-leading-heading: 1.2;
+    --pp-leading-body: 1.5;
+  }
+
   html {
     scroll-behavior: smooth;
   }
   
   body {
     @apply font-sans antialiased;
-    background: linear-gradient(135deg, #0c4a6e 0%, #075985 50%, #0369a1 100%);
+    background: linear-gradient(135deg, rgb(var(--pp-bg)) 0%, rgb(15 46 58) 100%);
+    color: rgb(var(--pp-fg));
   }
 }
 
 @layer components {
+  /* Glass morphism components */
   .glass {
-    @apply bg-white/10 backdrop-blur-md border border-white/20;
+    background: rgba(255, 255, 255, 0.08);
+    backdrop-filter: blur(24px);
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    box-shadow: var(--pp-shadow-sm);
   }
   
   .glass-dark {
-    @apply bg-black/10 backdrop-blur-md border border-white/10;
+    background: rgba(var(--pp-surface), 0.4);
+    backdrop-filter: blur(24px);
+    border: 1px solid rgba(var(--pp-border), 0.08);
+    box-shadow: var(--pp-shadow-sm);
   }
   
+  /* Typography utilities */
+  .text-display-1 {
+    font-size: var(--pp-text-display-1);
+    line-height: var(--pp-leading-display);
+    font-weight: 900;
+    letter-spacing: -0.04em;
+  }
+  
+  .text-h1 {
+    font-size: var(--pp-text-h1);
+    line-height: var(--pp-leading-heading);
+    font-weight: 800;
+    letter-spacing: -0.02em;
+  }
+  
+  .text-h2 {
+    font-size: var(--pp-text-h2);
+    line-height: var(--pp-leading-heading);
+    font-weight: 700;
+    letter-spacing: -0.01em;
+  }
+  
+  .text-h3 {
+    font-size: var(--pp-text-h3);
+    line-height: var(--pp-leading-heading);
+    font-weight: 600;
+  }
+  
+  .text-body {
+    font-size: var(--pp-text-body);
+    line-height: var(--pp-leading-body);
+  }
+  
+  .text-caption {
+    font-size: var(--pp-text-caption);
+    line-height: 1.33;
+    font-weight: 500;
+  }
+  
+  /* Brand elements */
   .gradient-text {
-    @apply bg-gradient-to-r from-primary-400 via-accent-400 to-primary-600 bg-clip-text text-transparent;
+    background: linear-gradient(135deg, rgb(var(--pp-primary)), rgb(var(--pp-accent)));
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
   }
   
-  .glow-button {
-    @apply relative overflow-hidden;
+  .brand-underline {
+    position: relative;
   }
   
-  .glow-button::before {
+  .brand-underline::after {
     content: '';
-    @apply absolute inset-0 bg-gradient-to-r from-primary-500/0 via-primary-400/30 to-primary-500/0 
-           translate-x-[-100%] transition-transform duration-1000;
+    position: absolute;
+    bottom: -4px;
+    left: 0;
+    right: 0;
+    height: 3px;
+    background: linear-gradient(90deg, rgb(var(--pp-primary)), rgb(var(--pp-accent)));
+    border-radius: 2px;
+    box-shadow: 0 0 20px rgba(var(--pp-primary), 0.4);
   }
   
-  .glow-button:hover::before {
-    @apply translate-x-[100%];
+  /* Container system */
+  .container {
+    max-width: 80rem; /* 1280px */
+    margin: 0 auto;
+    padding: 0 1.5rem;
   }
   
-  .floating-orb {
-    @apply absolute rounded-full blur-xl opacity-20 animate-float;
+  @screen sm {
+    .container {
+      padding: 0 2rem;
+    }
   }
   
-  .ripple-effect {
-    @apply absolute inset-0 rounded-full border-2 border-primary-400/30 animate-ripple;
+  /* Section spacing */
+  .section {
+    padding: 5rem 0;
+  }
+  
+  @screen md {
+    .section {
+      padding: 7rem 0;
+    }
   }
 }
 
 @layer utilities {
+  /* Accessibility utilities */
+  .sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+  }
+  
+  .focus\:not-sr-only:focus {
+    position: static;
+    width: auto;
+    height: auto;
+    padding: inherit;
+    margin: inherit;
+    overflow: visible;
+    clip: auto;
+    white-space: normal;
+  }
+  
   .text-shadow {
     text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   }
