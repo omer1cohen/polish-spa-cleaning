@@ -3,6 +3,7 @@ import { motion } from 'framer-motion'
 import Navigation from './components/navigation'
 import Hero from './components/hero'
 import Features from './components/features'
+import Products from './components/products'
 import ContactForm from './components/contact-form'
 import { fadeUp } from './lib/motion'
 
@@ -91,6 +92,7 @@ const App = () => {
       <main id="main" role="main">
         <Hero />
         <Features />
+        <Products />
         <ContactForm />
       </main>
       <Footer />
