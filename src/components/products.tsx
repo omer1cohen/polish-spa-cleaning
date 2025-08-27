@@ -86,135 +86,90 @@ const Products = () => {
       description="Discover our comprehensive range of innovative cleaning products, each designed with 50+ years of expertise and cutting-edge technology."
     >
       <div className="max-w-7xl mx-auto">
-        {/* 3D Product Gallery */}
+        {/* Hero Product Image */}
         <motion.div
-          className="relative h-[600px] mb-20 perspective-1000"
+          className="relative mb-16 rounded-3xl overflow-hidden"
+          variants={fadeUp}
+          initial="hidden"
+          whileInView="show"
+          viewport={viewport}
+        >
+          <div className="relative h-80 lg:h-96">
+            <img 
+              src="/images/products/product1.jpg"
+              alt="Multi-Color Scouring Sponges"
+              className="w-full h-full object-cover"
+            />
+            <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-black/30" />
+            <div className="absolute inset-0 flex items-center justify-center">
+              <div className="text-center text-white">
+                <h3 className="text-3xl lg:text-5xl font-bold mb-4">Premium Quality</h3>
+                <p className="text-lg lg:text-xl opacity-90 max-w-2xl">50+ Years of Innovation in Professional Cleaning</p>
+              </div>
+            </div>
+          </div>
+        </motion.div>
+
+        {/* Tall Rectangular Product Cards */}
+        <motion.div
+          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-20"
           variants={stagger}
           initial="hidden"
           whileInView="show"
           viewport={viewport}
         >
-          {/* Background Gradient */}
-          <div className="absolute inset-0 bg-gradient-to-br from-primary/10 via-transparent to-accent/10 rounded-3xl" />
-          
-          {/* 3D Product Cards */}
-          <div className="relative h-full flex items-center justify-center">
-            {products.map((product, index) => {
-              const isCenter = index === selectedProduct
-              const isLeft = index < selectedProduct
-              const isRight = index > selectedProduct
-              
-              // Calculate 3D positioning
-              const translateX = isCenter ? 0 : isLeft ? -120 - (selectedProduct - index) * 60 : 120 + (index - selectedProduct) * 60
-              const translateZ = isCenter ? 0 : -200 - Math.abs(selectedProduct - index) * 100
-              const rotateY = isCenter ? 0 : isLeft ? 45 : -45
-              const scale = isCenter ? 1 : 0.8 - Math.abs(selectedProduct - index) * 0.1
-              const opacity = isCenter ? 1 : 0.6 - Math.abs(selectedProduct - index) * 0.2
-
-              return (
-                <motion.div
-                  key={product.id}
-                  className="absolute cursor-pointer"
-                  initial={false}
-                  animate={{
-                    x: translateX,
-                    z: translateZ,
-                    rotateY: rotateY,
-                    scale: scale,
-                    opacity: opacity
-                  }}
-                  transition={{
-                    duration: 0.6,
-                    ease: [0.25, 0.46, 0.45, 0.94]
-                  }}
-                  style={{
-                    transformStyle: 'preserve-3d'
-                  }}
-                  onClick={() => setSelectedProduct(index)}
-                  whileHover={{ scale: scale * 1.05 }}
-                >
-                  <div className="relative w-80 h-96 group">
-                    {/* Product Card */}
-                    <div className={`absolute inset-0 bg-gradient-to-br ${product.color} rounded-2xl shadow-2xl overflow-hidden`}>
-                      {/* Badge */}
-                      <div className="absolute top-4 right-4 z-10">
-                        <span className="px-3 py-1 bg-bg/90 backdrop-blur-sm text-caption font-semibold text-primary rounded-full">
-                          {product.badge}
-                        </span>
-                      </div>
-                      
-                      {/* Product Image Area */}
-                      <div className="h-2/3 flex items-center justify-center p-4 relative overflow-hidden">
-                        {/* Product Display */}
-                        <div className="w-full h-full bg-white/20 backdrop-blur-sm rounded-xl flex items-center justify-center relative overflow-hidden">
-                          {/* Background Pattern */}
-                          <div className="absolute inset-0 opacity-10">
-                            <div className="absolute top-4 left-4 w-20 h-20 border border-white/20 rounded-lg rotate-12" />
-                            <div className="absolute bottom-4 right-4 w-16 h-16 border border-white/20 rounded-lg -rotate-12" />
-                            <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-32 h-32 border border-white/10 rounded-full" />
-                          </div>
-                          
-                          {/* Product Image */}
-                          <div className="relative z-10 w-full h-full flex items-center justify-center">
-                            <img 
-                              src={product.image}
-                              alt={product.name}
-                              className="max-w-full max-h-full object-contain rounded-lg shadow-lg"
-                              style={{ filter: 'drop-shadow(0 10px 20px rgba(0,0,0,0.3))' }}
-                            />
-                          </div>
-                          
-                          {/* Product overlay info */}
-                          <div className="absolute bottom-4 left-4 right-4 text-center text-white z-10">
-                            <div className="bg-white/20 backdrop-blur-sm rounded-lg p-3">
-                              <p className="text-sm font-bold mb-1">{product.name}</p>
-                              <p className="text-xs opacity-90">{product.category}</p>
-                            </div>
-                          </div>
-                        </div>
-                        
-                        {/* Floating Elements */}
-                        <div className="absolute top-4 left-4 w-8 h-8 bg-white/20 rounded-full animate-pulse" />
-                        <div className="absolute bottom-4 right-4 w-6 h-6 bg-white/20 rounded-full animate-pulse" style={{ animationDelay: '1s' }} />
-                      </div>
-                      
-                      {/* Product Info */}
-                      <div className="h-1/3 p-6 bg-bg/90 backdrop-blur-sm">
-                        <h3 className="text-lg font-bold text-fg mb-2 line-clamp-1">{product.name}</h3>
-                        <p className="text-caption text-fg/70 mb-2">{product.category}</p>
-                        {isCenter && (
-                          <motion.div
-                            initial={{ opacity: 0, y: 10 }}
-                            animate={{ opacity: 1, y: 0 }}
-                            transition={{ delay: 0.3 }}
-                          >
-                            <p className="text-body text-fg/80 text-sm line-clamp-2 mb-3">
-                              {product.description}
-                            </p>
-                          </motion.div>
-                        )}
-                      </div>
+          {products.map((product, index) => (
+            <motion.div
+              key={product.id}
+              className="relative group cursor-pointer"
+              variants={cardHover}
+              whileHover="hover"
+              onClick={() => setSelectedProduct(index)}
+            >
+              {/* Tall Rectangular Card */}
+              <div className="relative h-[600px] rounded-2xl overflow-hidden shadow-2xl">
+                {/* Product Image - Takes up most of the card */}
+                <div className="relative h-4/5">
+                  <img 
+                    src={product.image}
+                    alt={product.name}
+                    className="w-full h-full object-cover"
+                  />
+                  
+                  {/* Badge */}
+                  <div className="absolute top-4 right-4 z-20">
+                    <span className="px-3 py-1 bg-bg/95 backdrop-blur-md text-caption font-semibold text-primary rounded-full shadow-lg">
+                      {product.badge}
+                    </span>
+                  </div>
+                  
+                  {/* Subtle blur overlay at top */}
+                  <div className="absolute top-0 left-0 right-0 h-20 bg-gradient-to-b from-black/40 via-black/20 to-transparent" />
+                  
+                  {/* Subtle blur overlay at bottom for text */}
+                  <div className="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-t from-black/80 via-black/40 to-transparent" />
+                  
+                  {/* Product name overlay on image */}
+                  <div className="absolute bottom-4 left-4 right-4 z-10">
+                    <div className="backdrop-blur-md bg-white/10 rounded-lg p-4 border border-white/20">
+                      <h3 className="text-xl font-bold text-white mb-1">{product.name}</h3>
+                      <p className="text-sm text-white/90">{product.category}</p>
                     </div>
                   </div>
-                </motion.div>
-              )
-            })}
-          </div>
-
-          {/* Navigation Dots */}
-          <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2 flex gap-3">
-            {products.map((_, index) => (
-              <button
-                key={index}
-                onClick={() => setSelectedProduct(index)}
-                className={`w-3 h-3 rounded-full transition-all duration-300 ${
-                  index === selectedProduct
-                    ? 'bg-primary shadow-lg shadow-primary/50'
-                    : 'bg-fg/30 hover:bg-fg/50'
-                }`}
-              />
-            ))}
-          </div>
+                </div>
+                
+                {/* Bottom section with description */}
+                <div className="h-1/5 bg-bg p-4 flex flex-col justify-center">
+                  <p className="text-sm text-fg/80 line-clamp-2 leading-relaxed">
+                    {product.description}
+                  </p>
+                </div>
+                
+                {/* Hover effect overlay */}
+                <div className="absolute inset-0 bg-gradient-to-t from-primary/20 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+              </div>
+            </motion.div>
+          ))}
         </motion.div>
 
         {/* Selected Product Details */}
