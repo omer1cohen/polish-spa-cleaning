@@ -12,53 +12,69 @@ const Products = () => {
   const products = [
     {
       id: 1,
-      name: 'Magic Scouring Pads',
-      category: 'Non-Scratch Technology',
-      description: 'Revolutionary melamine foam pads that effortlessly remove stains without scratching delicate surfaces like glass, ceramic, and stainless steel.',
-      features: ['Zero-scratch guarantee', 'Chemical-free cleaning', 'Works with water only', 'Removes 99% of stains'],
+      name: 'Multi-Color Scouring Sponges',
+      category: 'Kitchen Essentials',
+      description: 'Colorful, high-quality scouring sponges in vibrant colors. Perfect for kitchen cleaning with dual-sided functionality - soft sponge on one side, abrasive scouring surface on the other.',
+      features: ['Dual-sided design', 'Color-coded for hygiene', 'Long-lasting durability', 'Non-scratch formula'],
       badge: 'Best Seller',
       icon: Shield,
-      color: 'from-blue-600 to-cyan-500'
+      color: 'from-blue-600 to-cyan-500',
+      image: '/images/products/product1.jpg'
     },
     {
       id: 2,
-      name: 'Premium Microfiber Collection',
-      category: 'Professional Grade',
-      description: 'Ultra-fine microfiber cloths designed for streak-free cleaning and polishing of all surfaces.',
-      features: ['Lint-free finish', '10x more absorbent', 'Machine washable 500+ times', 'Anti-bacterial treatment'],
+      name: 'Steel Wool Scrubbers',
+      category: 'Heavy-Duty Cleaning',
+      description: 'Premium steel wool scrubbers in silver and bronze grades. Ideal for tough cleaning jobs, grease removal, and surface preparation.',
+      features: ['Fine grade steel wool', 'Rust-resistant', 'Professional quality', 'Multiple grade options'],
       badge: 'Pro Choice',
       icon: Sparkles,
-      color: 'from-purple-600 to-pink-500'
+      color: 'from-purple-600 to-pink-500',
+      image: '/images/products/product2.jpg'
     },
     {
       id: 3,
-      name: 'Industrial Strength Cleaners',
-      category: 'Heavy-Duty Solutions',
-      description: 'Professional-grade cleaning compounds formulated for the toughest industrial and commercial applications.',
-      features: ['Cuts through grease & grime', 'Fast 30-second action', 'Safe for food surfaces', 'Concentrated formula'],
+      name: 'Metallic Scouring Pads',
+      category: 'Industrial Grade',
+      description: 'High-performance metallic scouring pads in green and red colors. Designed for heavy-duty cleaning applications and stubborn stain removal.',
+      features: ['Extra-strong fibers', 'Colorfast technology', 'Industrial strength', 'Long-lasting performance'],
       badge: 'Professional',
       icon: Star,
-      color: 'from-orange-600 to-red-500'
+      color: 'from-orange-600 to-red-500',
+      image: '/images/products/product3.jpg'
     },
     {
       id: 4,
-      name: 'Eco-Smart Clean Series',
-      category: 'Sustainable Technology',
-      description: 'Environmentally responsible cleaning products that deliver professional results while protecting our planet.',
-      features: ['100% biodegradable', 'Plant-based ingredients', 'Recycled packaging', 'Carbon-neutral production'],
-      badge: 'Eco-Certified',
+      name: 'Green & Silver Scrub Pads',
+      category: 'Versatile Cleaning',
+      description: 'Versatile green and silver scouring pads that combine gentle cleaning with effective scrubbing power. Perfect for both delicate and tough cleaning tasks.',
+      features: ['Versatile dual-action', 'Gentle yet effective', 'Dishwasher safe', 'Multi-surface compatible'],
+      badge: 'Versatile',
       icon: Award,
-      color: 'from-green-600 to-emerald-500'
+      color: 'from-green-600 to-emerald-500',
+      image: '/images/products/product4.jpg'
     },
     {
       id: 5,
-      name: 'Master Clean Kit',
-      category: 'Complete Solution',
-      description: 'The ultimate cleaning arsenal with everything needed for professional-level household maintenance.',
-      features: ['15-piece professional kit', '50% cost savings', 'Lifetime warranty', 'Expert training included'],
-      badge: 'Value Master',
+      name: 'Sunday Pastels Collection',
+      category: 'Premium Home Care',
+      description: 'Beautiful pastel-colored sponges in an elegant gift box. Perfect combination of functionality and aesthetics for modern homes.',
+      features: ['8 colorful sponges', 'Gift-ready packaging', 'Premium quality foam', 'Modern aesthetic design'],
+      badge: 'Premium',
       icon: Star,
-      color: 'from-indigo-600 to-purple-500'
+      color: 'from-indigo-600 to-purple-500',
+      image: '/images/products/pastels-sponges.png'
+    },
+    {
+      id: 6,
+      name: 'Metallic Triangular Pads',
+      category: 'Specialty Cleaning',
+      description: 'Unique triangular-shaped metallic scouring pads that reach into corners and tight spaces. Advanced steel fiber technology for superior cleaning power.',
+      features: ['Triangular corner design', 'Advanced steel fibers', 'Corner accessibility', 'Professional grade'],
+      badge: 'Innovative',
+      icon: Shield,
+      color: 'from-slate-600 to-gray-500',
+      image: '/images/products/product6.png'
     }
   ]
 
@@ -128,7 +144,7 @@ const Products = () => {
                       </div>
                       
                       {/* Product Image Area */}
-                      <div className="h-2/3 flex items-center justify-center p-8 relative overflow-hidden">
+                      <div className="h-2/3 flex items-center justify-center p-4 relative overflow-hidden">
                         {/* Product Display */}
                         <div className="w-full h-full bg-white/20 backdrop-blur-sm rounded-xl flex items-center justify-center relative overflow-hidden">
                           {/* Background Pattern */}
@@ -138,16 +154,21 @@ const Products = () => {
                             <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-32 h-32 border border-white/10 rounded-full" />
                           </div>
                           
-                          <div className="text-center text-white relative z-10">
-                            <div className="w-24 h-24 bg-white/30 backdrop-blur-sm rounded-2xl flex items-center justify-center mx-auto mb-6 shadow-2xl">
-                              <product.icon className="w-12 h-12 text-white" />
-                            </div>
-                            <p className="text-xl font-bold mb-2">{product.name}</p>
-                            <p className="text-sm opacity-90 font-medium">{product.category}</p>
-                            
-                            {/* Product highlight */}
-                            <div className="mt-4 px-3 py-1 bg-white/20 backdrop-blur-sm rounded-full inline-block">
-                              <span className="text-xs font-semibold">{product.features[0]}</span>
+                          {/* Product Image */}
+                          <div className="relative z-10 w-full h-full flex items-center justify-center">
+                            <img 
+                              src={product.image}
+                              alt={product.name}
+                              className="max-w-full max-h-full object-contain rounded-lg shadow-lg"
+                              style={{ filter: 'drop-shadow(0 10px 20px rgba(0,0,0,0.3))' }}
+                            />
+                          </div>
+                          
+                          {/* Product overlay info */}
+                          <div className="absolute bottom-4 left-4 right-4 text-center text-white z-10">
+                            <div className="bg-white/20 backdrop-blur-sm rounded-lg p-3">
+                              <p className="text-sm font-bold mb-1">{product.name}</p>
+                              <p className="text-xs opacity-90">{product.category}</p>
                             </div>
                           </div>
                         </div>
