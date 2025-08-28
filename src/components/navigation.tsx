@@ -35,7 +35,7 @@ const Navigation = () => {
     <>
       <motion.nav
         className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
-          isScrolled ? 'glass py-3' : 'py-6'
+          isScrolled ? 'bg-white/95 backdrop-blur-sm shadow-sm border-b border-border/30 py-3' : 'bg-transparent py-6'
         }`}
         variants={fadeUp}
         initial="hidden"
@@ -43,39 +43,42 @@ const Navigation = () => {
       >
         <div className="container">
           <div className="flex items-center justify-between">
-            {/* Logo */}
+            {/* Clean Logo */}
             <div className="flex items-center">
-              <h1 className="text-h3 font-black gradient-text">
-                Plasto-Polish
+              <h1 className="text-h3 font-bold text-fg">
+                <span className="text-primary">Plasto</span>-Polish
               </h1>
             </div>
 
-            {/* Desktop Navigation */}
+            {/* Clean Desktop Navigation */}
             <div className="hidden md:flex items-center space-x-8">
               {navItems.map((item) => (
                 <button
                   key={item.label}
                   onClick={() => scrollToSection(item.href)}
-                  className="text-body font-medium text-fg/80 hover:text-fg transition-colors duration-200 relative group"
+                  className="text-body font-medium text-fg hover:text-primary transition-colors duration-200 relative group"
                 >
                   {item.label}
-                  <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-gradient-to-r from-primary to-accent rounded-full transition-all duration-300 group-hover:w-full" />
+                  <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-primary rounded-full transition-all duration-300 group-hover:w-full" />
                 </button>
               ))}
             </div>
 
-            {/* Desktop CTA */}
+            {/* Clean Desktop CTA */}
             <div className="hidden md:block">
-              <Button onClick={() => scrollToSection('#contact')}>
+              <Button 
+                onClick={() => scrollToSection('#contact')}
+                className="bg-primary hover:bg-primary/90 text-white shadow-sm"
+              >
                 Get Quote
                 <ArrowRight className="w-4 h-4" />
               </Button>
             </div>
 
-            {/* Mobile Menu Button */}
+            {/* Clean Mobile Menu Button */}
             <button
               onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-              className="md:hidden p-2 text-fg hover:bg-surface/20 rounded-lg transition-colors"
+              className="md:hidden p-2 text-fg hover:bg-surface rounded-lg transition-colors"
               aria-label="Toggle menu"
             >
               {isMobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
@@ -95,9 +98,9 @@ const Navigation = () => {
         }}
         transition={{ duration: 0.3 }}
       >
-        {/* Backdrop */}
+        {/* Clean Backdrop */}
         <div 
-          className="absolute inset-0 bg-bg/80 backdrop-blur-md"
+          className="absolute inset-0 bg-white/90 backdrop-blur-sm"
           onClick={() => setIsMobileMenuOpen(false)}
         />
         

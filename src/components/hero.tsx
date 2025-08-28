@@ -19,14 +19,22 @@ const Hero = () => {
   }, [])
 
   return (
-    <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
-      {/* Background Video */}
-      <div className="absolute inset-0 w-full h-full overflow-hidden">
+    <section className="relative min-h-screen flex items-center justify-center overflow-hidden bg-gradient-to-br from-white via-surface to-white">
+      {/* Clean Background Pattern */}
+      <div className="absolute inset-0 opacity-30">
+        <div className="absolute inset-0" style={{
+          backgroundImage: 'radial-gradient(circle at 1px 1px, rgba(59, 130, 246, 0.1) 1px, transparent 0)',
+          backgroundSize: '24px 24px'
+        }} />
+      </div>
+
+      {/* Subtle Video Background for Movement */}
+      <div className="absolute inset-0 w-full h-full overflow-hidden opacity-20">
         <div 
           className="absolute inset-0 w-full h-full"
           style={{
             transform: 'scale(1.1)', 
-            filter: 'brightness(0.3) contrast(1.3)',
+            filter: 'brightness(0.8) saturate(0.3) blur(1px)',
           }}
         >
           <iframe
@@ -53,40 +61,36 @@ const Hero = () => {
             onLoad={() => setIsVideoLoaded(true)}
           />
         </div>
-        
-        {/* Enhanced overlay for better text readability */}
-        <div className="absolute inset-0 bg-gradient-to-b from-bg/20 via-bg/40 to-bg/60" />
-        <div className="absolute inset-0 bg-gradient-to-t from-bg/80 via-transparent to-transparent" />
       </div>
 
       {/* Content */}
       <div className="relative z-10 text-center px-6 max-w-6xl mx-auto">
-        {/* Eyebrow */}
+        {/* Clean Eyebrow */}
         <motion.div
           variants={heroSubtitle}
           initial="hidden"
           animate="show"
           className="mb-8"
         >
-          <span className="inline-flex items-center gap-2 px-6 py-3 glass rounded-full text-caption font-semibold text-accent uppercase tracking-wide">
+          <span className="inline-flex items-center gap-2 px-6 py-3 bg-white rounded-full text-caption font-medium text-primary border border-border/30 shadow-sm">
             <Sparkles className="w-4 h-4" />
             50+ Years of Innovation
           </span>
         </motion.div>
         
-        {/* Main Title */}
+        {/* Clean Main Title */}
         <motion.h1
           variants={heroTitle}
           initial="hidden"
           animate="show"
-          className="text-display-1 md:text-8xl font-black mb-8 leading-none"
+          className="text-6xl md:text-7xl font-bold mb-8 leading-tight text-fg"
         >
-          <span className="gradient-text">The Future of</span>
+          <span className="text-primary">The Future of</span>
           <br />
-          <span className="relative brand-underline">
+          <span className="relative">
             Cleaning
             <motion.div
-              className="absolute -bottom-2 left-0 right-0 h-1 bg-gradient-to-r from-primary to-accent rounded-full opacity-80"
+              className="absolute -bottom-1 left-0 right-0 h-1 bg-gradient-to-r from-primary to-accent rounded-full"
               variants={brandUnderline}
               initial="hidden"
               animate="show"
@@ -95,14 +99,13 @@ const Hero = () => {
           </span>
         </motion.h1>
         
-        {/* Subtitle */}
+        {/* Clean Subtitle */}
         <motion.p
           variants={heroSubtitle}
           initial="hidden"
           animate="show"
           transition={{ delay: 0.6 }}
-          className="text-xl md:text-2xl text-fg/80 mb-12 max-w-4xl mx-auto leading-relaxed"
-          style={{ textShadow: '0 4px 20px rgba(0,0,0,0.8)' }}
+          className="text-lg md:text-xl text-fg-muted mb-12 max-w-3xl mx-auto leading-relaxed"
         >
           Experience revolutionary non-scratch technology that transforms 
           household cleaning into an effortless, premium experience.

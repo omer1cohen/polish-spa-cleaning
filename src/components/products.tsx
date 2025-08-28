@@ -86,33 +86,33 @@ const Products = () => {
       description="Discover our comprehensive range of innovative cleaning products, each designed with 50+ years of expertise and cutting-edge technology."
     >
       <div className="max-w-7xl mx-auto">
-        {/* Hero Product Image */}
+        {/* Clean Hero Product Image */}
         <motion.div
-          className="relative mb-16 rounded-3xl overflow-hidden"
+          className="relative mb-20 rounded-2xl overflow-hidden bg-white shadow-sm border border-border/20"
           variants={fadeUp}
           initial="hidden"
           whileInView="show"
           viewport={viewport}
         >
-          <div className="relative h-80 lg:h-96">
+          <div className="relative h-64 lg:h-80">
             <img 
               src="/images/products/product1.jpg"
               alt="Multi-Color Scouring Sponges"
               className="w-full h-full object-cover"
             />
-            <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-black/30" />
-            <div className="absolute inset-0 flex items-center justify-center">
-              <div className="text-center text-white">
-                <h3 className="text-3xl lg:text-5xl font-bold mb-4">Premium Quality</h3>
-                <p className="text-lg lg:text-xl opacity-90 max-w-2xl">50+ Years of Innovation in Professional Cleaning</p>
+            <div className="absolute inset-0 bg-gradient-to-t from-white/95 via-transparent to-transparent" />
+            <div className="absolute bottom-8 left-8 right-8">
+              <div className="text-center">
+                <h3 className="text-2xl lg:text-4xl font-bold mb-3 text-fg">Premium Quality</h3>
+                <p className="text-base lg:text-lg text-fg/70 max-w-2xl mx-auto">50+ Years of Innovation in Professional Cleaning</p>
               </div>
             </div>
           </div>
         </motion.div>
 
-        {/* Tall Rectangular Product Cards */}
+        {/* Clean Minimal Product Cards */}
         <motion.div
-          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-20"
+          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-20"
           variants={stagger}
           initial="hidden"
           whileInView="show"
@@ -126,47 +126,48 @@ const Products = () => {
               whileHover="hover"
               onClick={() => setSelectedProduct(index)}
             >
-              {/* Tall Rectangular Card */}
-              <div className="relative h-[600px] rounded-2xl overflow-hidden shadow-2xl">
-                {/* Product Image - Takes up most of the card */}
-                <div className="relative h-4/5">
+              {/* Clean White Card */}
+              <div className="relative bg-white rounded-xl overflow-hidden shadow-sm border border-border/50 hover:shadow-md transition-all duration-300">
+                {/* Product Image */}
+                <div className="relative aspect-[4/3] bg-surface">
                   <img 
                     src={product.image}
                     alt={product.name}
                     className="w-full h-full object-cover"
                   />
                   
-                  {/* Badge */}
-                  <div className="absolute top-4 right-4 z-20">
-                    <span className="px-3 py-1 bg-bg/95 backdrop-blur-md text-caption font-semibold text-primary rounded-full shadow-lg">
+                  {/* Clean Badge */}
+                  <div className="absolute top-3 right-3">
+                    <span className="px-3 py-1 bg-white text-caption font-medium text-primary rounded-lg shadow-sm border border-border/30">
                       {product.badge}
                     </span>
                   </div>
+                </div>
+                
+                {/* Product Info */}
+                <div className="p-6">
+                  <div className="mb-3">
+                    <h3 className="text-lg font-semibold text-fg mb-1 line-clamp-1">{product.name}</h3>
+                    <p className="text-sm text-primary font-medium">{product.category}</p>
+                  </div>
                   
-                  {/* Subtle blur overlay at top */}
-                  <div className="absolute top-0 left-0 right-0 h-20 bg-gradient-to-b from-black/40 via-black/20 to-transparent" />
+                  <p className="text-sm text-fg-muted line-clamp-2 leading-relaxed mb-4">
+                    {product.description}
+                  </p>
                   
-                  {/* Subtle blur overlay at bottom for text */}
-                  <div className="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-t from-black/80 via-black/40 to-transparent" />
-                  
-                  {/* Product name overlay on image */}
-                  <div className="absolute bottom-4 left-4 right-4 z-10">
-                    <div className="backdrop-blur-md bg-white/10 rounded-lg p-4 border border-white/20">
-                      <h3 className="text-xl font-bold text-white mb-1">{product.name}</h3>
-                      <p className="text-sm text-white/90">{product.category}</p>
-                    </div>
+                  {/* Feature List */}
+                  <div className="space-y-1">
+                    {product.features.slice(0, 2).map((feature, idx) => (
+                      <div key={idx} className="flex items-center gap-2">
+                        <div className="w-1.5 h-1.5 bg-accent rounded-full flex-shrink-0" />
+                        <span className="text-xs text-fg-muted">{feature}</span>
+                      </div>
+                    ))}
                   </div>
                 </div>
                 
-                {/* Bottom section with description */}
-                <div className="h-1/5 bg-bg p-4 flex flex-col justify-center">
-                  <p className="text-sm text-fg/80 line-clamp-2 leading-relaxed">
-                    {product.description}
-                  </p>
-                </div>
-                
-                {/* Hover effect overlay */}
-                <div className="absolute inset-0 bg-gradient-to-t from-primary/20 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                {/* Hover effect */}
+                <div className="absolute inset-0 ring-2 ring-primary/20 rounded-xl opacity-0 group-hover:opacity-100 transition-all duration-300" />
               </div>
             </motion.div>
           ))}
