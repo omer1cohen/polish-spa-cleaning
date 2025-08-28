@@ -26,7 +26,7 @@ const Hero = () => {
           className="absolute inset-0 w-full h-full"
           style={{
             transform: 'scale(1.1)', 
-            filter: 'brightness(0.3) contrast(1.3)',
+            filter: 'brightness(0.5) contrast(1.3)',
           }}
         >
           <iframe
