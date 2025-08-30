@@ -14,10 +14,20 @@
       "Bash(mkdir:*)",
       "Bash(git restore:*)",
       "Bash(npm i:*)",
-      "Bash(git commit:*)"
+      "Bash(git commit:*)",
+      "Read(/C:\\Users\\omer\\Desktop\\imges plasto/**)",
+      "Read(/C:\\Users\\omer\\Desktop\\imges plasto/**)",
+      "Bash(copy \"C:\\Users\\omer\\Desktop\\imges plasto\\*\" \"public\\images\\products\"\")",
+      "Bash(xcopy:*)",
+      "Bash(cp:*)",
+      "WebFetch(domain:shop.super-pharm.co.il)",
+      "Read(C:\\Users\\omer\\AppData\\Roaming\\Code\\User/**)"
     ],
     "deny": [],
-    "ask": []
+    "ask": [],
+    "additionalDirectories": [
+      "C:\\Users\\omer\\Desktop\\imges plasto"
+    ]
   },
   "outputStyle": "default"
 }
